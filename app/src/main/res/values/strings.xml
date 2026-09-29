@@ -16,4 +16,14 @@
     <string name="settings_accent_color_purple">Purple Accent</string>
     <string name="settings_accent_color_orange">Orange Accent</string>
     <string name="settings_title">Settings</string>
+    <string name="card_item_name">Item Name</string>
+    <string name="card_category">Category: General</string>
+    <string name="card_quantity">Qty: -</string>
+    <string name="card_shelf">Shelf: -</string>
+    <string name="card_delete_content_description">delete ingredient from pantry</string>
+    <string name="shelf_adapter_category_placeholder">Category: %s</string>
+    <string name="shelf_adapter_quantity_placeholder">Qty: %s</string>
+    <string name="shelf_adapter_shelf_placeholder">Shelf: %s</string>
+    <string name="fragment_pantry_list_search">Search Pantry...</string>
+    <string name="fragment_pantry_list_empty_list">No ingredients in pantry yet</string>
 </resources>
