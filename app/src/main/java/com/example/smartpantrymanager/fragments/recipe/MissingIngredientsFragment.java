@@ -6,10 +6,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -24,91 +22,77 @@ import com.example.smartpantrymanager.model.ShelfItem;
 import com.example.smartpantrymanager.viewmodel.ShelfViewModel;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class SuggestedRecipesFragment extends Fragment {
+public class MissingIngredientsFragment extends Fragment {
 
-    private LinearLayout layoutStrict;
+    private LinearLayout layoutMissingRecipes;
     private List<RecipeEntity> allRecipes;
     private List<ShelfItem> allPantryItems;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_suggested_recipes, container, false);
+        View view = inflater.inflate(R.layout.fragment_missing_ingredients, container, false);
 
-        layoutStrict = view.findViewById(R.id.layout_strict_recipes);
-        Button buttonViewMissing = view.findViewById(R.id.button_view_missing);
-        Button buttonAddRecipe = view.findViewById(R.id.button_add_recipe);
-
-        buttonViewMissing.setOnClickListener(v -> {
-            MissingIngredientsFragment missingFragment = new MissingIngredientsFragment();
-            requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, missingFragment)
-                    .addToBackStack(null)
-                    .commit();
-        });
-
-        buttonAddRecipe.setOnClickListener(v -> {
-            AddEditRecipeFragment addRecipeFragment = new AddEditRecipeFragment();
-            requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, addRecipeFragment)
-                    .addToBackStack(null)
-                    .commit();
-        });
+        layoutMissingRecipes = view.findViewById(R.id.layout_missing_recipes);
 
         ShelfViewModel shelfViewModel = new ViewModelProvider(this).get(ShelfViewModel.class);
 
         shelfViewModel.getAllItems().observe(getViewLifecycleOwner(), items -> {
             allPantryItems = items;
-            evaluateRecipeMatches();
+            evaluateMissingIngredients();
         });
 
         shelfViewModel.getAllRecipes().observe(getViewLifecycleOwner(), recipes -> {
             allRecipes = recipes;
-            evaluateRecipeMatches();
+            evaluateMissingIngredients();
         });
 
         return view;
     }
 
-    private void evaluateRecipeMatches() {
-        if (allRecipes == null || allPantryItems == null || layoutStrict == null) return;
+    private void evaluateMissingIngredients() {
+        if (allRecipes == null || allPantryItems == null || layoutMissingRecipes == null) return;
 
         Map<String, Double> pantryMap = new HashMap<>();
         for (ShelfItem item : allPantryItems) {
             pantryMap.put(item.getName().trim().toLowerCase(), item.getQuantity());
         }
 
-        layoutStrict.removeAllViews();
+        layoutMissingRecipes.removeAllViews();
 
         for (RecipeEntity recipe : allRecipes) {
-            boolean hasAll = true;
+            List<String> missingList = new ArrayList<>();
             List<RecipeIngredient> required = recipe.getRecipeIngredients();
             for (RecipeIngredient req : required) {
                 Double availableQty = pantryMap.get(req.getName());
-                if (availableQty == null || availableQty < req.getAmount()) {
-                    hasAll = false;
-                    break;
+                double have = availableQty != null ? availableQty : 0.0;
+                if (have < req.getAmount()) {
+                    double needed = req.getAmount() - have;
+                    String neededFmt = needed == (long) needed ? String.format(Locale.getDefault(), "%d", (long) needed) : String.valueOf(needed);
+                    String haveFmt = have == (long) have ? String.format(Locale.getDefault(), "%d", (long) have) : String.valueOf(have);
+                    missingList.add(neededFmt + "x " + req.getName() + (have > 0 ? " (have " + haveFmt + ")" : ""));
                 }
             }
 
-            if (hasAll) {
-                addRecipeCard(recipe, layoutStrict);
+            if (!missingList.isEmpty()) {
+                addMissingRecipeCard(recipe, missingList);
             }
         }
 
-        if (layoutStrict.getChildCount() == 0) {
+        if (layoutMissingRecipes.getChildCount() == 0) {
             TextView tv = new TextView(getContext());
-            tv.setText(R.string.suggested_recipes_no_recipe_message);
-            layoutStrict.addView(tv);
+            tv.setText(R.string.missing_ingredients_no_missing_message);
+            layoutMissingRecipes.addView(tv);
         }
     }
 
-    private void addRecipeCard(RecipeEntity recipe, LinearLayout parentLayout) {
+    private void addMissingRecipeCard(RecipeEntity recipe, List<String> missingList) {
         if (getContext() == null) return;
 
         CardView card = new CardView(getContext());
@@ -136,14 +120,26 @@ public class SuggestedRecipesFragment extends Fragment {
         titleView.setTextSize(18);
         titleView.setTypeface(null, Typeface.BOLD);
 
-        TextView subView = new TextView(getContext());
-        subView.setText(MessageFormat.format("{0}{1} • {2}", "Prep: ", recipe.getPrepTime(), "All ingredients available"));
-        subView.setTextSize(14);
-        subView.setTextColor(getResources().getColor(android.R.color.darker_gray, null));
-        subView.setPadding(0, 4, 0, 0);
+        TextView countView = new TextView(getContext());
+        countView.setText(MessageFormat.format("{0}{1}{2}","Missing ", missingList.size(), " ingredient(s)"));
+        countView.setTextSize(14);
+        countView.setTextColor(getResources().getColor(android.R.color.holo_red_dark, null));
+        countView.setPadding(0, 4, 0, 0);
+
+        StringBuilder sb = new StringBuilder("Missing items: ");
+        for (int i = 0; i < missingList.size(); i++) {
+            sb.append(missingList.get(i));
+            if (i < missingList.size() - 1) sb.append(", ");
+        }
+
+        TextView detailsView = new TextView(getContext());
+        detailsView.setText(sb.toString());
+        detailsView.setTextSize(14);
+        detailsView.setPadding(0, 4, 0, 0);
 
         innerLayout.addView(titleView);
-        innerLayout.addView(subView);
+        innerLayout.addView(countView);
+        innerLayout.addView(detailsView);
         card.addView(innerLayout);
 
         card.setOnClickListener(v -> {
@@ -152,14 +148,14 @@ public class SuggestedRecipesFragment extends Fragment {
             bundle.putLong("recipe_id", recipe.getId());
             bundle.putString("title", recipe.getTitle());
             bundle.putString("time", recipe.getPrepTime());
-            StringBuilder sb = new StringBuilder();
-            for (RecipeIngredient recipeIngredient : recipe.getRecipeIngredients()) {
-                double amount = recipeIngredient.getAmount();
-                String amountFormatAmount = amount == (long) amount ? String.format(Locale.getDefault(), "%d", (long) amount) : String.valueOf(amount);
-                String unit = recipeIngredient.getUnit();
-                sb.append("• ").append(amountFormatAmount).append(unit != null && !unit.isEmpty() ? " " + unit : "").append(" ").append(recipeIngredient.getName()).append("\n");
+            StringBuilder ingSb = new StringBuilder();
+            for (RecipeIngredient ing : recipe.getRecipeIngredients()) {
+                double amt = ing.getAmount();
+                String amtFmt = amt == (long) amt ? String.format(Locale.getDefault(), "%d", (long) amt) : String.valueOf(amt);
+                String u = ing.getUnit();
+                ingSb.append("• ").append(amtFmt).append(u != null && !u.isEmpty() ? " " + u : "").append(" ").append(ing.getName()).append("\n");
             }
-            bundle.putString("ingredients", sb.toString().trim());
+            bundle.putString("ingredients", ingSb.toString().trim());
             bundle.putString("recipe_ingredients_raw", recipe.getIngredients());
             bundle.putString("instructions", recipe.getInstructions());
             detailFragment.setArguments(bundle);
@@ -170,6 +166,6 @@ public class SuggestedRecipesFragment extends Fragment {
                     .commit();
         });
 
-        parentLayout.addView(card);
+        layoutMissingRecipes.addView(card);
     }
 }

@@ -9,29 +9,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button_view_missing"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/suggested_recipes_button_view" />
-
-        <Button
-            android:id="@+id/button_add_recipe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/suggested_recipes_button_add"
+            android:text="@string/missing_ingredients_title"
+            android:textSize="22sp"
+            android:textStyle="bold"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/suggested_recipes_match_message"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:text="@string/missing_ingredients_subtitle_recipes_additional"
+            android:textSize="14sp"
+            android:textColor="?attr/colorPrimary"
             android:layout_marginBottom="12dp" />
 
         <LinearLayout
-            android:id="@+id/layout_strict_recipes"
+            android:id="@+id/layout_missing_recipes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
