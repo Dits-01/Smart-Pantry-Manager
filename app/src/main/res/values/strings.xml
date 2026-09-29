@@ -4,4 +4,16 @@
     <string name="nav_add_ingredient">Add Ingredient</string>
     <string name="nav_recipes">Recipe Suggestions</string>
     <string name="nav_settings">Settings</string>
+    <string name="settings_theme_mode_dark_mode">Dark Mode (Gray Theme)</string>
+    <string name="settings_theme_mode">Theme Mode</string>
+    <string name="settings_preferred_unit_system">Preferred Unit System</string>
+    <string name="settings_preferred_unit_system_metric">Metric (ml / g)</string>
+    <string name="settings_preferred_unit_system_imperial">Imperial (oz / cups)</string>
+    <string name="settings_accent_color">Accent Color</string>
+    <string name="settings_accent_color_blue">Blue Accent (Default)</string>
+    <string name="settings_accent_color_indigo">Indigo Accent</string>
+    <string name="settings_accent_color_teal">Teal Accent</string>
+    <string name="settings_accent_color_purple">Purple Accent</string>
+    <string name="settings_accent_color_orange">Orange Accent</string>
+    <string name="settings_title">Settings</string>
 </resources>
