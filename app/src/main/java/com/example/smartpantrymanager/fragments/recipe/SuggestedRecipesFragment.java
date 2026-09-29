@@ -30,7 +30,6 @@ import java.util.Locale;
 import java.util.Map;
 
 public class SuggestedRecipesFragment extends Fragment {
-
     private LinearLayout layoutStrict;
     private List<RecipeEntity> allRecipes;
     private List<ShelfItem> allPantryItems;

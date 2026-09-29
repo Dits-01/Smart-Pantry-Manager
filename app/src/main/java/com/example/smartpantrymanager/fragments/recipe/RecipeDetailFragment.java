@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeDetailFragment extends Fragment {
-
     private ShelfViewModel shelfViewModel;
     private long recipeId = -1;
     private String recipeTitle = "";

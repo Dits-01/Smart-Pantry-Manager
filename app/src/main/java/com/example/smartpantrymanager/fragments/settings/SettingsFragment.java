@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.example.smartpantrymanager.R;
 
 public class SettingsFragment extends Fragment {
-
     private static final String PREF_NAME = "shelf_prefs";
     private static final String KEY_ACCENT = "accent_color";
     private static final String KEY_DARK_MODE = "dark_mode";

@@ -28,17 +28,13 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddEditRecipeFragment extends Fragment {
-
     private ShelfViewModel shelfViewModel;
     private TextInputEditText editTextTitle, editTextPrepTime, editTextIngredientName, editTextIngredientAmount, editTextInstructions;
     private Spinner spinnerRecipeIngredientUnit;
-    private TextView textHeader;
     private LinearLayout layoutIngredientsList;
-
     private boolean isEditMode = false;
     private long recipeId = -1;
     private final List<RecipeIngredient> recipeIngredients = new ArrayList<>();
-
     private static final String[] UNITS = {"", "ml", "L", "cup", "tbsp", "tsp", "g", "kg", "oz", "lb", "pcs"};
 
     @Nullable
@@ -48,7 +44,7 @@ public class AddEditRecipeFragment extends Fragment {
 
         shelfViewModel = new ViewModelProvider(this).get(ShelfViewModel.class);
 
-        textHeader = view.findViewById(R.id.text_recipe_header_title);
+        TextView textHeader = view.findViewById(R.id.text_recipe_header_title);
         editTextTitle = view.findViewById(R.id.edit_text_recipe_title);
         editTextPrepTime = view.findViewById(R.id.edit_text_recipe_prep_time);
         editTextIngredientName = view.findViewById(R.id.edit_text_ingredient_name);
@@ -76,9 +72,9 @@ public class AddEditRecipeFragment extends Fragment {
                 editTextPrepTime.setText(getArguments().getString("recipe_time", ""));
                 editTextInstructions.setText(getArguments().getString("recipe_instructions", ""));
 
-                String rawIngs = getArguments().getString("recipe_ingredients_raw", "");
-                if (!rawIngs.isEmpty()) {
-                    for (String p : rawIngs.split(",")) {
+                String rawIngredients = getArguments().getString("recipe_ingredients_raw", "");
+                if (!rawIngredients.isEmpty()) {
+                    for (String p : rawIngredients.split(",")) {
                         RecipeIngredient ri = new RecipeIngredient(p.trim());
                         if (!ri.getName().isEmpty()) {
                             recipeIngredients.add(ri);

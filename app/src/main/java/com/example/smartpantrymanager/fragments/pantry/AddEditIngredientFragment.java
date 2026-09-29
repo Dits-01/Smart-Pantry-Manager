@@ -30,12 +30,8 @@ public class AddEditIngredientFragment extends Fragment {
     private ShelfViewModel shelfViewModel;
     private TextInputEditText editTextName, editTextCategory, editTextQuantity, editTextLocation, editTextNotes;
     private Spinner spinnerUnit;
-    private TextView textHeader;
-    private Button buttonSave;
-
     private boolean isEditMode = false;
     private long itemId = -1;
-
     private static final String[] UNITS = {"", "ml", "L", "cup", "tbsp", "tsp", "g", "kg", "oz", "lb", "pcs"};
 
     @Nullable
@@ -45,14 +41,14 @@ public class AddEditIngredientFragment extends Fragment {
 
         shelfViewModel = new ViewModelProvider(this).get(ShelfViewModel.class);
 
-        textHeader = view.findViewById(R.id.text_header_title);
+        TextView textHeader = view.findViewById(R.id.text_header_title);
         editTextName = view.findViewById(R.id.edit_text_item_name);
         editTextCategory = view.findViewById(R.id.edit_text_item_category);
         editTextQuantity = view.findViewById(R.id.edit_text_item_quantity);
         editTextLocation = view.findViewById(R.id.edit_text_item_location);
         editTextNotes = view.findViewById(R.id.edit_text_item_notes);
         spinnerUnit = view.findViewById(R.id.spinner_item_unit);
-        buttonSave = view.findViewById(R.id.button_save_item);
+        Button buttonSave = view.findViewById(R.id.button_save_item);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 requireContext(), android.R.layout.simple_spinner_item, UNITS

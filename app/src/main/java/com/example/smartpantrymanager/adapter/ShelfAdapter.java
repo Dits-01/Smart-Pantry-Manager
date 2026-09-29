@@ -58,8 +58,8 @@ public class ShelfAdapter extends ListAdapter<ShelfItem, ShelfAdapter.ShelfViewH
 
         String[] cardInfo = new String[3];
         cardInfo[0] = context.getString(R.string.shelf_adapter_category_placeholder, currentItem.getCategory());
-        double q = currentItem.getQuantity();
-        String qtyFormatted = q == (long) q ? String.format(Locale.getDefault(), "%d", (long) q) : String.valueOf(q);
+        double qty = currentItem.getQuantity();
+        String qtyFormatted = qty == (long) qty ? String.format(Locale.getDefault(), "%d", (long) qty) : String.valueOf(qty);
         String unit = currentItem.getUnit();
         String qtyWithUnit = qtyFormatted + (unit != null && !unit.isEmpty() ? " " + unit : "");
         cardInfo[1] = context.getString(R.string.shelf_adapter_quantity_placeholder, qtyWithUnit);

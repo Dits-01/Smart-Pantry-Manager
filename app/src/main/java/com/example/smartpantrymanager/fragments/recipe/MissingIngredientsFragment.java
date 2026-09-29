@@ -29,7 +29,6 @@ import java.util.Locale;
 import java.util.Map;
 
 public class MissingIngredientsFragment extends Fragment {
-
     private LinearLayout layoutMissingRecipes;
     private List<RecipeEntity> allRecipes;
     private List<ShelfItem> allPantryItems;
