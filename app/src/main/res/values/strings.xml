@@ -24,6 +24,15 @@
     <string name="shelf_adapter_category_placeholder">Category: %s</string>
     <string name="shelf_adapter_quantity_placeholder">Qty: %s</string>
     <string name="shelf_adapter_shelf_placeholder">Shelf: %s</string>
-    <string name="fragment_pantry_list_search">Search Pantry...</string>
-    <string name="fragment_pantry_list_empty_list">No ingredients in pantry yet</string>
+    <string name="pantry_list_search">Search Pantry…</string>
+    <string name="pantry_list_empty_list">No ingredients in pantry yet</string>
+    <string name="add_edit_ingredient_title_add">Add Pantry Ingredient</string>
+    <string name="add_edit_ingredient_hint_name">Ingredient Name</string>
+    <string name="add_edit_ingredient_hint_category">Category (e.g. Dairy, Vegetables, Meat)</string>
+    <string name="add_edit_ingredient_hint_quantity">Quantity</string>
+    <string name="add_edit_ingredient_hint_shelf_location">Pantry Shelf Location (e.g. A1, B2, C3)</string>
+    <string name="add_edit_ingredient_hint_notes">Notes / Expiry Date</string>
+    <string name="add_edit_ingredient_button_save">Save Ingredient</string>
+    <string name="add_edit_ingredient_title_edit">Edit Pantry Ingredient</string>
+    <string name="add_edit_ingredient_button_update">Update Ingredient</string>
 </resources>
