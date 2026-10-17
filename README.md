@@ -9,24 +9,6 @@ Smart Pantry Manager is a lightweight Android app that helps you track pantry in
 
 ---
 
-## Demo / Screenshots
-
-> Replace the placeholders below with real screenshots. Put images in `docs/screenshots/` or the repo root and update the paths.
-
-![App Icon](https://raw.githubusercontent.com/Dits-01/Smart-Pantry-Manager/master/app/src/main/ic_launcher-playstore.png)
-
-<!-- Example screenshot placeholders -->
-![Pantry List](docs/screenshots/pantry-list.png)
-![Recipe Suggestions](docs/screenshots/recipe-suggestions.png)
-![Add Ingredient](docs/screenshots/add-ingredient.png)
-
-Tip: To add real screenshots:
-1. Create `docs/screenshots/` in the repo.
-2. Add PNG/JPG files named as above (or update the image paths in this README).
-3. Commit and push — GitHub will render them automatically.
-
----
-
 ## Features
 
 - Add, edit, delete pantry items (name, category, quantity, unit, shelf location, notes).
